@@ -8,6 +8,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Models\Category;
 use App\Models\OrderProduct;
+use Illuminate\Support\Str;
 
 class Product extends Model implements HasMedia
 {
@@ -24,7 +25,7 @@ class Product extends Model implements HasMedia
     protected static function booted()
     {
         static::creating(function ($product) {
-            $product->slug= str_slug($product->title);
+            $product->slug= Str::slug($product->title);
         });
     }
 

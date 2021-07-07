@@ -26,6 +26,7 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection|Category[] $child_category
  * @property-read int|null $child_category_count
  * @property-read Category $parent_category
+ * @method static \Database\Factories\CategoryFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
