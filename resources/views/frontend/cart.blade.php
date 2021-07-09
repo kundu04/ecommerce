@@ -30,13 +30,13 @@
                         <tr>
                             <td>{{$i++}}</td>
                             <td>{{$product['title']}}</td>
-                            <td>BDT {{$product['unit_price']}}</td>
+                            <td>BDT {{number_format($product['unit_price'],2)}}</td>
                             <td><input type="number" name="quantity" value="{{$product['quantity']}}"></td>
-                            <td>BDT {{$product['total_price']}}</td>
+                            <td>BDT {{number_format($product['total_price'],2)}}</td>
                             <td>
                             <form action="{{route('cart.remove')}}" method="post">@csrf
                             <input type="hidden" name="product_id" value="{{$key}}">
-                            <button type="submit" class="btn btn-sm btn-outline-danger text-uppercase">Remove</button>
+                            <button type="submit" class="btn btn-sm btn-outline-warning text-uppercase">Remove</button>
                             </form>
                             </td>
                         </tr>
@@ -52,7 +52,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div><a href="{{route('cart.clear')}}"><button class="btn btn-danger">Clear Cart</button></a></div>
               @endif  
+
+              
            
        
     </div>

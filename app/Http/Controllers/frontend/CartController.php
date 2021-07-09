@@ -58,4 +58,9 @@ class CartController extends Controller
         session()->flash('message','product removed from cart.');
         return redirect()->back();
     }
+
+    public function clearCart(){
+        session(['cart'=>[]]);
+        return redirect()->back();
+    }
 }
