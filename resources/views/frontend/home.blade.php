@@ -21,12 +21,14 @@
         <div class="col">
         
           <div class="card shadow-sm">
-
+            <a href="{{route('product.details',$product->slug)}}">
             <img  class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{$product->getFirstMediaUrl('products')}}" alt="{{$product->title}}">
-
+            </a>
             <div class="card-body">
               <p class="card-text">
+              <a href="{{route('product.details',$product->slug)}}">
               {{$product->title}}
+              </a>
               </p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">

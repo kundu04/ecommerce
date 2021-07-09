@@ -20,6 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[App\Http\Controllers\frontend\FrontController::class, 'index'])->name('frontend.home');
 Route::get('/cart',[App\Http\Controllers\frontend\CartController::class, 'showCart'])->name('cart.show');
 Route::post('/cart',[App\Http\Controllers\frontend\CartController::class, 'addToCart'])->name('cart.add');
-
+Route::get('product/{slug}',[App\Http\Controllers\frontend\ProductController::class, 'showDetails'])->name('product.details');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
