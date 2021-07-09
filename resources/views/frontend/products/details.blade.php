@@ -6,7 +6,7 @@
             <aside class="col-sm-5 border-right">
                 <section class="gallery-wrap">
                     <div class="img-big-wrap">
-                        <a href="#"><img src="{{$product->getFirstMediaUrl('products')}}" alt="{{$product->title}}" width=350></a>
+                        <a href="#"><img src="{{$product->getFirstMediaUrl('products')}}"  width=350></a>
                     </div>
                 </section>
 

@@ -17,8 +17,7 @@ class ProductsTableSeeder extends Seeder
         Product::factory(20)->create();
 
         $Product = Product::select('id')->get();
-        $url = 'https://via.placeholder.com/800x600.png/CCCCCC?text=cats+Faker
-        +animi';
+        $url = 'https://via.placeholder.com/640x480.png/00eeff?text=ut';
         foreach ($Product as $product){
             $product->addMediaFromUrl($url)
                     ->toMediaCollection('products');

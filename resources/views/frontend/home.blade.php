@@ -22,7 +22,7 @@
         
           <div class="card shadow-sm">
             <a href="{{route('product.details',$product->slug)}}">
-            <img  class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{$product->getFirstMediaUrl('products')}}" alt="{{$product->title}}">
+            <img  class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{$product->getFirstMediaUrl('products')}}" >
             </a>
             <div class="card-body">
               <p class="card-text">
