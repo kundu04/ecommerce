@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+// Route::get('/', function () {
     
-    return view('frontend/home');
-});
+//     return view('frontend/home');
+// });
+Route::get('/',[App\Http\Controllers\frontend\FrontController::class, 'index'])->name('frontend.home');
+Route::get('/cart',[App\Http\Controllers\frontend\CartController::class, 'showCart'])->name('cart.show');
+Route::post('/cart',[App\Http\Controllers\frontend\CartController::class, 'addToCart'])->name('cart.add');
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
