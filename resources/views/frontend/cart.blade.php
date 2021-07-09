@@ -16,6 +16,7 @@
                         <tr>
                             <td>Serial</td>
                             <td>Product</td>
+                            <td>Unit Price</td>
                             <td>Quantity</td>
                             <td>Price</td>
                             <td>Action</td>
@@ -29,8 +30,9 @@
                         <tr>
                             <td>{{$i++}}</td>
                             <td>{{$product['title']}}</td>
+                            <td>BDT {{$product['unit_price']}}</td>
                             <td><input type="number" name="quantity" value="{{$product['quantity']}}"></td>
-                            <td>BDT {{$product['price']}}</td>
+                            <td>BDT {{$product['total_price']}}</td>
                             <td>
                             <form action="{{route('cart.remove')}}" method="post">@csrf
                             <input type="hidden" name="product_id" value="{{$key}}">
@@ -41,6 +43,7 @@
                     
                     @endforeach
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td>Total</td>

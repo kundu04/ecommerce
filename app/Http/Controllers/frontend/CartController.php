@@ -9,7 +9,7 @@ class CartController extends Controller
 {
     public function showCart(){
         $data['cart']=session()->has('cart')?session()->get('cart'):[];
-        $data['total']=array_sum(array_column($data['cart'],'price'));
+        $data['total']=array_sum(array_column($data['cart'],'total_price'));
         return view('frontend.cart',$data);
     }
     public function addToCart(Request $request){
@@ -22,15 +22,19 @@ class CartController extends Controller
         }
 
         $product=Product::findOrFail($request->product_id);
+        $unit_price=($product->sale_price != null && $product->sale_price > 0)? $product->sale_price:$product->price;
         $cart=session()->has('cart')?session()->get('cart'):[];
+        
         if(array_key_exists($product->id,$cart)){
             $cart[$product->id]['quantity']++;
+            $cart[$product->id]['total_price'] = $cart[$product->id]['quantity'] *  $cart[$product->id]['unit_price'];
         }
         else{
             $cart[$product->id]=[
                 'title'=>$product->title,
                 'quantity'=>1,
-                'price'=>($product->sale_price != null && $product->sale_price > 0)? $product->sale_price:$product->price,
+                'unit_price'=>$unit_price,
+                'total_price'=>$unit_price,
             ];
         }
         
