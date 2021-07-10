@@ -18,10 +18,15 @@ use Illuminate\Support\Facades\Route;
 //     return view('frontend/home');
 // });
 Route::get('/',[App\Http\Controllers\frontend\FrontController::class, 'index'])->name('frontend.home');
+
 Route::get('/cart',[App\Http\Controllers\frontend\CartController::class, 'showCart'])->name('cart.show');
 Route::post('/cart',[App\Http\Controllers\frontend\CartController::class, 'addToCart'])->name('cart.add');
+
 Route::post('/cart/remove',[App\Http\Controllers\frontend\CartController::class, 'removeCart'])->name('cart.remove');
 Route::get('/cart/clear',[App\Http\Controllers\frontend\CartController::class, 'clearCart'])->name('cart.clear');
+
 Route::get('product/{slug}',[App\Http\Controllers\frontend\ProductController::class, 'showDetails'])->name('product.details');
-Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/register',[App\Http\Controllers\frontend\AuthController::class,'showRegisterForm'])->name('register');
+Route::post('/register',[App\Http\Controllers\frontend\AuthController::class,'processRegister'])->name('register');
+

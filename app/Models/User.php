@@ -16,7 +16,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $gurded = [
+    protected $guarded = [
         'remember_token',
         
     ];
