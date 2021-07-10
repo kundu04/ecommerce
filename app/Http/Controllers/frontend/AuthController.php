@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Exception;
 class AuthController extends Controller
 {
     public function showRegisterForm(){
@@ -29,13 +30,23 @@ class AuthController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone_number' => $request['phone_number'],
-            'password' => bcrypt($request['password']),
-            'email_verification_token' => uniqid(time(),true).Str::random(16),
-        ]);
+        try{
+            User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'phone_number' => $request['phone_number'],
+                'password' => bcrypt($request['password']),
+                'email_verification_token' => uniqid(time(),true).Str::random(80),
+            ]);
+
+            
+        }
+        catch(Exception $e){
+            session()->flash('type','warning');
+            session()->flash('message',$e->getMessage());
+        }
+        
+        return redirect()->back();
     
 
     }
