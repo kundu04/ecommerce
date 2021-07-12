@@ -35,3 +35,6 @@ Route::post('/register',[App\Http\Controllers\frontend\AuthController::class,'pr
 
 Route::get('/activate/{token}',[App\Http\Controllers\frontend\AuthController::class,'activate'])->name('activate');
 
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/logout',[App\Http\Controllers\frontend\AuthController::class,'logout'])->name('logout');
+});
