@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Exception;
+use App\Notifications\RegistrationEmailNotification;
 class AuthController extends Controller
 {
     public function showRegisterForm(){
@@ -31,23 +32,53 @@ class AuthController extends Controller
         }
 
         try{
-            User::create([
+            $userdata = User::create([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'phone_number' => $request['phone_number'],
                 'password' => bcrypt($request['password']),
-                'email_verification_token' => uniqid(time(),true).Str::random(80),
+                'email_verification_token' => uniqid(time(),true).Str::random(16),
             ]);
-
+            
+            $userdata->notify(new RegistrationEmailNotification($userdata));
+            
+            session()->flash('type','success');
+            session()->flash('message','Information recorded! Please check your email');
+            return redirect()->back();
             
         }
         catch(Exception $e){
             session()->flash('type','warning');
             session()->flash('message',$e->getMessage());
+
+            
         }
-        
         return redirect()->back();
+        
     
+
+    }
+
+    public function activate($token=null){
+        if($token==null){
+            return redirect()->route('/');
+        }
+        $user=User::where('email_verification_token',$token)->firstOrFail();
+
+        if($user){
+            $user->update([
+                'email_verified_at'=>now(),
+                'email_verification_token'=>null,
+            ]);
+
+            session()->flash('type','success');
+            session()->flash('message','Account activated. You can login now!');
+            return redirect()->back();
+        }
+        session()->flash('type','warning');
+        session()->flash('message','Invalid token');
+
+        return redirect()->back();
 
     }
 }

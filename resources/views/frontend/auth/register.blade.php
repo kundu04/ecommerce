@@ -19,7 +19,7 @@
 
             <div class="form-group">
                 <label for="phone_number">Phone Number</label>
-                <input type="text" class="form-control" name="phone_number" value="{{old('email')}}" required>
+                <input type="text" class="form-control" name="phone_number" value="{{old('phone_number')}}" required>
             </div>
 
             <div class="form-group">

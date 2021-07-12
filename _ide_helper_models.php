@@ -155,7 +155,7 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property string|null $email_verified_at
  * @property string|null $email_verification_token
  * @property string $phone_number
  * @property string $password
