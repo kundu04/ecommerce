@@ -27,6 +27,9 @@ Route::get('/cart/clear',[App\Http\Controllers\frontend\CartController::class, '
 
 Route::get('product/{slug}',[App\Http\Controllers\frontend\ProductController::class, 'showDetails'])->name('product.details');
 
+Route::get('/login',[App\Http\Controllers\frontend\AuthController::class,'showLoginForm'])->name('login');
+Route::post('/login',[App\Http\Controllers\frontend\AuthController::class,'processLogin']);
+
 Route::get('/register',[App\Http\Controllers\frontend\AuthController::class,'showRegisterForm'])->name('register');
 Route::post('/register',[App\Http\Controllers\frontend\AuthController::class,'processRegister']);
 

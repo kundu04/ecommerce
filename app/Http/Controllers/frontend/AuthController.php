@@ -11,6 +11,42 @@ use Exception;
 use App\Notifications\RegistrationEmailNotification;
 class AuthController extends Controller
 {
+
+    public function showLoginForm(){
+        
+        return view('frontend.auth.login');
+
+    }
+    public function processLogin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $credentials = $request->only(['email','password']);
+        if(auth()->attempt($credentials)){
+            if(auth()->user()->email_verified_at == null){
+                session()->flash('type','warning');
+                session()->flash('message','Invalid User');
+                return redirect()->route('login');
+
+            }
+
+            session()->flash('type','success');
+            session()->flash('message','You are logged in!');
+            return redirect()->intended();
+        }
+        session()->flash('type','warning');
+        session()->flash('message','Invalid credentials');
+        return redirect()->route('login');
+
+    }
+
+
+
     public function showRegisterForm(){
         
         return view('frontend.auth.register');
@@ -73,7 +109,7 @@ class AuthController extends Controller
 
             session()->flash('type','success');
             session()->flash('message','Account activated. You can login now!');
-            return redirect()->back();
+            return redirect()->route('login');
         }
         session()->flash('type','warning');
         session()->flash('message','Invalid token');
