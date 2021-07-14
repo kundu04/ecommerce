@@ -19,4 +19,7 @@ class Order extends Model
     public function Processor(){
         return $this->hasOne(User::class,'processed_by');
     }
+    public function Products(){
+        return $this->hasOne(OrderProduct::class);
+    }
 }

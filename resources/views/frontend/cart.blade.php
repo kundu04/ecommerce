@@ -52,7 +52,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <div><a href="{{route('cart.clear')}}"><button class="btn btn-danger">Clear Cart</button></a></div>
+                <div>
+                <a href="{{route('cart.checkout')}}"><button class="btn btn-success">Checkout</button></a>
+                <a href="{{route('cart.clear')}}"><button class="btn btn-danger">Clear Cart</button></a>
+            </div>
               @endif  
 
               

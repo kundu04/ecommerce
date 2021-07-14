@@ -5,6 +5,9 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
+use Illuminate\Support\Facades\Validator;
+
 class CartController extends Controller
 {
     public function showCart(){
@@ -62,5 +65,59 @@ class CartController extends Controller
     public function clearCart(){
         session(['cart'=>[]]);
         return redirect()->back();
+    }
+
+    public function checkout(){
+
+        $data['cart']=session()->has('cart')?session()->get('cart'):[];
+        $data['total']=array_sum(array_column($data['cart'],'total_price'));
+        return view('frontend.checkout',$data);
+    }
+
+    public function processOrder(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name'=>'required',
+            'Phone_number'=>'required|min:11|numeric',
+            'address'=>'required',
+            'city'=>'required',
+            'post_code'=>'required',
+        ]);
+
+        $cart=session()->has('cart')?session()->get('cart'):[];
+        $total=array_sum(array_column($cart,'total_price'));
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        
+            $orderInfo = Order::create([
+                'user_id'=>auth()->user()->id,
+                'customer_name' => $request['name'],
+                'customer_phone_number' => $request['Phone_number'],
+                'address' => $request['address'],
+                'postal_code' => $request['post_code'],
+                'city' => $request['city'],
+                'total_amount'=>$total,
+                'paid_amount'=>$total,
+                'payment_details'=>'Cash on delivery',
+            ]);
+            
+            foreach($cart as $product_id => $product){
+                $orderInfo->products()->create([
+                    'product_id' => $product_id,
+                    'quantity' => $product['quantity'],
+                    'price' => $product['total_price'],
+                ]);
+            }
+            session()->flash('type','success');
+            session()->flash('message','Information recorded! Please check your (email)...');
+            
+            session()->forget(['cart','total']);
+            
+            return redirect()->back();
+            
+        
+
     }
 }

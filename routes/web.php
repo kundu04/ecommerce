@@ -25,6 +25,9 @@ Route::post('/cart',[App\Http\Controllers\frontend\CartController::class, 'addTo
 Route::post('/cart/remove',[App\Http\Controllers\frontend\CartController::class, 'removeCart'])->name('cart.remove');
 Route::get('/cart/clear',[App\Http\Controllers\frontend\CartController::class, 'clearCart'])->name('cart.clear');
 
+Route::get('/cart/checkout',[App\Http\Controllers\frontend\CartController::class, 'checkout'])->name('cart.checkout');
+
+
 Route::get('product/{slug}',[App\Http\Controllers\frontend\ProductController::class, 'showDetails'])->name('product.details');
 
 Route::get('/login',[App\Http\Controllers\frontend\AuthController::class,'showLoginForm'])->name('login');
@@ -37,4 +40,5 @@ Route::get('/activate/{token}',[App\Http\Controllers\frontend\AuthController::cl
 
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/logout',[App\Http\Controllers\frontend\AuthController::class,'logout'])->name('logout');
+    Route::post('/order',[App\Http\Controllers\frontend\CartController::class,'processOrder'])->name('order');
 });
